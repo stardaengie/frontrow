@@ -965,12 +965,26 @@ return `
 
 // Calendar state
 let calendarDate = new Date(2026, 10, 1);
-let selectedCalendarDate = "2026-11-14";
+let selectedCalendarDate = null;
 
 function renderCalendarDayDetails() {
   const details = document.getElementById("calendar-day-details");
 
   if (!details) return;
+  if (!selectedCalendarDate) {
+  details.innerHTML = `
+    <div class="eyebrow">THIS MONTH</div>
+    <h3>
+      ${calendarDate.toLocaleDateString("en-GB", {
+        month: "long",
+        year: "numeric"
+      })}
+    </h3>
+    <p>Select a date to see its concerts.</p>
+  `;
+
+  return;
+}
 
   const selectedDate = new Date(
     selectedCalendarDate + "T12:00:00"
@@ -1078,10 +1092,13 @@ function renderCalendar() {
     }
 
     button.addEventListener("click", () => {
-      selectedCalendarDate = dateKey;
-      renderCalendar();
-      renderCalendarDayDetails();
-    });
+  selectedCalendarDate =
+    selectedCalendarDate === dateKey ? null : dateKey;
+
+  renderCalendar();
+  renderCalendarDayDetails();
+  renderConcertLists();
+});
 
     grid.appendChild(button);
   }
@@ -1124,11 +1141,15 @@ return `
 document.getElementById("prev-month").addEventListener("click", () => {
   calendarDate.setMonth(calendarDate.getMonth() - 1);
   renderCalendar();
+  renderCalendarDayDetails();
+  renderConcertLists();
 });
 
 document.getElementById("next-month").addEventListener("click", () => {
   calendarDate.setMonth(calendarDate.getMonth() + 1);
   renderCalendar();
+  renderCalendarDayDetails();
+  renderConcertLists();
 });
 
 // Calendar filters
@@ -1142,6 +1163,7 @@ document.querySelectorAll("#calendar-filters .filter-button").forEach(button => 
 
     renderCalendar();
     renderCalendarDayDetails();
+    renderConcertLists();
   });
 });
 
@@ -1202,30 +1224,50 @@ return days + " DAYS TO GO";
 }
 
 function renderConcertLists() {
-const sorted = [...concerts].sort((a, b) =>
-b.date.localeCompare(a.date)
-);
+  const list = document.getElementById("calendar-list");
 
-document.getElementById("calendar-list").innerHTML =
-sorted
-.filter(c => calendarFilter === "All" || c.status === calendarFilter)
-.map(concertCard)
-.join("") ||
-'<p class="empty-state">No concerts in this view.</p>';
+  if (!list) return;
 
-const query = document.getElementById("concert-search").value
-.trim().toLowerCase();
+  const year = calendarDate.getFullYear();
+  const month = calendarDate.getMonth();
 
-document.getElementById("archive-list").innerHTML =
-sorted
-.filter(c => archiveFilter === "All" || c.status === archiveFilter)
-.filter(c =>
-[c.artist, c.tour, c.city, c.country, c.venue]
-.some(value => value.toLowerCase().includes(query))
-)
-.map(concertCard)
-.join("") ||
-'<p class="empty-state">No concerts match your search.</p>';
+  const results = concerts
+    .filter(concert => {
+      const date = new Date(concert.date + "T12:00:00");
+
+      // Only show concerts in the currently displayed month.
+      if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month
+      ) {
+        return false;
+      }
+
+      // Respect the selected filter.
+      if (
+        calendarFilter !== "All" &&
+        concert.status !== calendarFilter
+      ) {
+        return false;
+      }
+
+      return true;
+    })
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  // A selected date is displayed in the dedicated date panel.
+  // Hide this monthly list while a date is selected to avoid duplicates.
+  if (selectedCalendarDate) {
+    list.innerHTML = "";
+    list.hidden = true;
+    return;
+  }
+
+  list.hidden = false;
+
+  list.innerHTML = results.length
+    ? results.map(concert => concertCard(concert)).join("")
+    : '<p class="empty-state">No concerts in this month match your filter.</p>';
 }
 
 function renderArtists() {
@@ -1363,6 +1405,8 @@ document.getElementById("graph-variable")
 .addEventListener("change", renderGraph);
 
 renderHome();
+renderCalendar();
+renderCalendarDayDetails();
 renderConcertLists();
 renderArtists();
 renderStats();

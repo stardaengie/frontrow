@@ -550,8 +550,9 @@ padding-top: 45px;
   min-height: 54px;
   padding: 9px 2px 6px;
   border: 1px solid transparent;
-  border-radius: 10px;
-  background: var(--surface);
+  border-radius: 0;
+  overflow: visible;
+  background: transparent;
   color: var(--text);
   font: inherit;
   font-size: 13px;
@@ -568,12 +569,30 @@ padding-top: 45px;
 }
 
 .calendar-day.selected {
-  border-color: var(--burgundy-light);
-  background: var(--burgundy);
+  border-color: transparent;
+  background: transparent;
+  color: var(--text);
 }
 
-.calendar-day.today {
-  border-color: var(--burgundy-light);
+.calendar-day-number {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.calendar-day.selected .calendar-day-number {
+  background: var(--burgundy);
+  color: var(--text);
+}
+
+.calendar-day.today:not(.selected) .calendar-day-number {
+  color: var(--burgundy-light);
 }
 
 .calendar-day.has-concert::after {
@@ -1070,7 +1089,7 @@ function renderCalendar() {
 
     const button = document.createElement("button");
     button.className = "calendar-day";
-    button.textContent = day;
+    button.innerHTML = `<span class="calendar-day-number">${day}</span>`;
     button.type = "button";
     button.setAttribute("aria-label", date.toLocaleDateString("en-GB", {
       day: "numeric",

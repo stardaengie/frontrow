@@ -573,7 +573,7 @@ padding-top: 45px;
 }
 
 .calendar-day.today {
-  box-shadow: inset 0 0 0 1px var(--burgundy-light);
+  border-color: var(--burgundy-light);
 }
 
 .calendar-day.has-concert::after {
@@ -964,7 +964,11 @@ return `
 }
 
 // Calendar state
-let calendarDate = new Date(2026, 10, 1);
+let calendarDate = new Date(
+  new Date().getFullYear(),
+  new Date().getMonth(),
+  1
+);
 let selectedCalendarDate = null;
 
 function renderCalendarDayDetails() {

@@ -1,1045 +1,1045 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1f1c1d">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1f1c1d">
 
-  <title>FRONTROW — Your concert life</title>
+<title>FRONTROW — Your concert life</title>
 
-  <style>
-    :root {
-  /* FRONTROW official colour palette */
-  --background: #1f1c1d;
-  --surface: #292526;
-  --surface-light: #332b2e;
+<style>
+:root {
+/* FRONTROW official colour palette */
+--background: #1f1c1d;
+--surface: #292526;
+--surface-light: #332b2e;
 
-  --burgundy: #691637;
-  --burgundy-light: #a65b78;
+--burgundy: #691637;
+--burgundy-light: #a65b78;
 
-  --text: #fff5f9;
-  --muted: #c0b2b9;
-  --border: #49343d;
+--text: #fff5f9;
+--muted: #c0b2b9;
+--border: #49343d;
 
-  --white: #fff5f9;
+--white: #fff5f9;
 }
 
-    * {
-      box-sizing: border-box;
-    }
+* {
+box-sizing: border-box;
+}
 
-    body {
+body {
     background: red !important;
-      margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-weight: 400;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    button, input, select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app {
-      max-width: 520px;
-      min-height: 100vh;
-      margin: 0 auto;
-      padding: 30px 22px 110px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 38px;
-    }
-
-    .logo {
-      font-size: 25px;
-      font-weight: 700;
-      letter-spacing: 3px;
-    }
-
-    .logo span {
-      color: var(--burgundy-light);
-    }
-
-    .eyebrow {
-      color: var(--muted);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .profile-button {
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      background: var(--surface);
-      color: var(--text);
-    }
-
-    h1 {
-      margin: 8px 0;
-      font-size: 31px;
-      font-weight: 600;
-      letter-spacing: -1px;
-    }
-
-    h2 {
-      font-size: 19px;
-      font-weight: 600;
-    }
-
-    p {
-      line-height: 1.5;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .section {
-      margin-top: 32px;
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 15px;
-    }
-
-    .section-heading h2 {
-      margin: 0;
-    }
-
-    .text-button {
-      padding: 8px 0;
-      border: 0;
-      background: none;
-      color: var(--burgundy-light);
-      font-size: 13px;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      min-height: 230px;
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      border: 1px solid #691637;
-      border-radius: 5px;
-      background:
-        radial-gradient(ellipse at 85% 20%, #421a2b 0%, transparent 52%),
-        linear-gradient(145deg, #33212a, #1f1c1d 75%);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      right: -55px;
-      top: -60px;
-      border: 1px solid #a65b78;
-      border-radius: 50%;
-      opacity: 0.5;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 130px;
-      height: 130px;
-      right: -30px;
-      top: -35px;
-      border: 1px solid #87506a;
-      border-radius: 50%;
-      opacity: 0.4;
-    }
-
-    .hero > * {
-      position: relative;
-    }
-
-    .hero-label {
-      color: #fff5f9;
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .hero h2 {
-      margin: 13px 0 5px;
-      font-size: 30px;
-      letter-spacing: -0.8px;
-    }
-
-    .hero p {
-      margin: 0;
-      color: #c0b2b9;
-      font-size: 13px;
-    }
-
-    .countdown {
-      align-self: flex-start;
-      margin-top: 22px;
-      padding: 9px 12px;
-      border: 1px solid #691637;
-      border-radius: 3px;
-      color: #fff5f9;
-      font-size: 12px;
-    }
-
-    .concert-list {
-      display: grid;
-      gap: 11px;
-    }
-
-    .concert-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      background: var(--surface);
-    }
-
-    .date-block {
-      flex-shrink: 0;
-      width: 43px;
-      text-align: center;
-    }
-
-    .date-block .month {
-      color: var(--burgundy-light);
-      font-size: 10px;
-      letter-spacing: 1px;
-    }
-
-    .date-block .day {
-      margin-top: 3px;
-      font-size: 23px;
-      font-weight: 600;
-    }
-
-    .concert-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .concert-info h3 {
-      overflow: hidden;
-      margin: 0;
-      font-size: 14px;
-      font-weight: 600;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .concert-info p {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .arrow {
-      color: var(--muted);
-      font-size: 20px;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 11px;
-    }
-
-    .stat-card {
-      padding: 18px;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      background: var(--surface);
-    }
-
-    .stat-number {
-      margin-top: 12px;
-      font-size: 27px;
-      font-weight: 600;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .page-description {
-      margin: 5px 0 25px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .search-input {
-      width: 100%;
-      min-height: 48px;
-      padding: 13px 15px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      outline: none;
-      background: var(--surface);
-      color: var(--text);
-      font-size: 16px;
-    }
-
-    .search-input:focus {
-      border-color: var(--burgundy-light);
-    }
-
-    .filter-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 14px 0 20px;
-    }
-
-    .filter-button {
-      padding: 9px 13px;
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      background: transparent;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .filter-button.active {
-      border-color: var(--burgundy);
-      background: var(--burgundy);
-      color: white;
-    }
-
-    .artist-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .artist-card h3 {
-      margin: 0;
-      font-size: 15px;
-    }
-
-    .artist-card p {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .follow-button {
-      flex-shrink: 0;
-      padding: 8px 12px;
-      border: 1px solid var(--burgundy);
-      border-radius: 3px;
-      background: transparent;
-      color: #dba5b8;
-      font-size: 12px;
-    }
-
-    .follow-button.following {
-      background: var(--burgundy);
-      color: white;
-    }
-
-    .empty-state {
-      padding: 25px 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      z-index: 10;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      display: flex;
-      justify-content: center;
-      padding: 10px 5px max(12px, env(safe-area-inset-bottom));
-      border-top: 1px solid var(--border);
-      background: rgba(16, 14, 16, 0.97);
-      backdrop-filter: blur(15px);
-    }
-
-    .nav-inner {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      width: 100%;
-      max-width: 520px;
-      gap: 2px;
-    }
-
-    .nav-button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      min-width: 0;
-      min-height: 51px;
-      padding: 5px 1px;
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .nav-button .icon {
-      font-size: 19px;
-      line-height: 1;
-    }
-
-    .nav-button.active {
-      color: #dba5b8;
-    }
-
-    .nav-button.active .icon {
-      color: var(--burgundy-light);
-    }
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    .year-select {
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      background: var(--surface);
-      color: var(--text);
-    }
-
-    .plain-list-item {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .plain-list-item strong {
-      display: block;
-      font-size: 14px;
-    }
-
-    .plain-list-item span {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .graph-placeholder {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-around;
-      height: 180px;
-      padding: 20px 10px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .bar-column {
-      display: flex;
-      flex: 1;
-      height: 100%;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 9px;
-    }
-
-    .bar {
-      width: min(35px, 60%);
-      border-radius: 3px 3px 0 0;
-      background: var(--burgundy);
-    }
-
-    .bar-year {
-      padding-bottom: 8px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    @media (min-width: 700px) {
-      .app {
-        padding-top: 45px;
-      }
-    }
-  </style>
+margin: 0;
+background: var(--background);
+color: var(--text);
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-weight: 400;
+-webkit-font-smoothing: antialiased;
+}
+
+button, input, select {
+font: inherit;
+}
+
+button {
+cursor: pointer;
+}
+
+.app {
+max-width: 520px;
+min-height: 100vh;
+margin: 0 auto;
+padding: 30px 22px 110px;
+}
+
+.topbar {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 38px;
+}
+
+.logo {
+font-size: 25px;
+font-weight: 700;
+letter-spacing: 3px;
+}
+
+.logo span {
+color: var(--burgundy-light);
+}
+
+.eyebrow {
+color: var(--muted);
+font-size: 10px;
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+
+.profile-button {
+width: 38px;
+height: 38px;
+border: 1px solid var(--border);
+border-radius: 50%;
+background: var(--surface);
+color: var(--text);
+}
+
+h1 {
+margin: 8px 0;
+font-size: 31px;
+font-weight: 600;
+letter-spacing: -1px;
+}
+
+h2 {
+font-size: 19px;
+font-weight: 600;
+}
+
+p {
+line-height: 1.5;
+}
+
+.muted {
+color: var(--muted);
+}
+
+.section {
+margin-top: 32px;
+}
+
+.section-heading {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+margin-bottom: 15px;
+}
+
+.section-heading h2 {
+margin: 0;
+}
+
+.text-button {
+padding: 8px 0;
+border: 0;
+background: none;
+color: var(--burgundy-light);
+font-size: 13px;
+}
+
+.hero {
+position: relative;
+overflow: hidden;
+min-height: 230px;
+padding: 25px;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+border: 1px solid #691637;
+border-radius: 5px;
+background:
+radial-gradient(ellipse at 85% 20%, #421a2b 0%, transparent 52%),
+linear-gradient(145deg, #33212a, #1f1c1d 75%);
+}
+
+.hero::before {
+content: "";
+position: absolute;
+width: 180px;
+height: 180px;
+right: -55px;
+top: -60px;
+border: 1px solid #a65b78;
+border-radius: 50%;
+opacity: 0.5;
+}
+
+.hero::after {
+content: "";
+position: absolute;
+width: 130px;
+height: 130px;
+right: -30px;
+top: -35px;
+border: 1px solid #87506a;
+border-radius: 50%;
+opacity: 0.4;
+}
+
+.hero > * {
+position: relative;
+}
+
+.hero-label {
+color: #fff5f9;
+font-size: 10px;
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+
+.hero h2 {
+margin: 13px 0 5px;
+font-size: 30px;
+letter-spacing: -0.8px;
+}
+
+.hero p {
+margin: 0;
+color: #c0b2b9;
+font-size: 13px;
+}
+
+.countdown {
+align-self: flex-start;
+margin-top: 22px;
+padding: 9px 12px;
+border: 1px solid #691637;
+border-radius: 3px;
+color: #fff5f9;
+font-size: 12px;
+}
+
+.concert-list {
+display: grid;
+gap: 11px;
+}
+
+.concert-card {
+display: flex;
+align-items: center;
+gap: 14px;
+min-width: 0;
+padding: 15px;
+border: 1px solid var(--border);
+border-radius: 5px;
+background: var(--surface);
+}
+
+.date-block {
+flex-shrink: 0;
+width: 43px;
+text-align: center;
+}
+
+.date-block .month {
+color: var(--burgundy-light);
+font-size: 10px;
+letter-spacing: 1px;
+}
+
+.date-block .day {
+margin-top: 3px;
+font-size: 23px;
+font-weight: 600;
+}
+
+.concert-info {
+flex: 1;
+min-width: 0;
+}
+
+.concert-info h3 {
+overflow: hidden;
+margin: 0;
+font-size: 14px;
+font-weight: 600;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+.concert-info p {
+margin: 5px 0 0;
+color: var(--muted);
+font-size: 12px;
+}
+
+.arrow {
+color: var(--muted);
+font-size: 20px;
+}
+
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 11px;
+}
+
+.stat-card {
+padding: 18px;
+border: 1px solid var(--border);
+border-radius: 5px;
+background: var(--surface);
+}
+
+.stat-number {
+margin-top: 12px;
+font-size: 27px;
+font-weight: 600;
+}
+
+.stat-label {
+color: var(--muted);
+font-size: 12px;
+}
+
+.page-description {
+margin: 5px 0 25px;
+color: var(--muted);
+font-size: 14px;
+}
+
+.search-input {
+width: 100%;
+min-height: 48px;
+padding: 13px 15px;
+border: 1px solid var(--border);
+border-radius: 4px;
+outline: none;
+background: var(--surface);
+color: var(--text);
+font-size: 16px;
+}
+
+.search-input:focus {
+border-color: var(--burgundy-light);
+}
+
+.filter-row {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+margin: 14px 0 20px;
+}
+
+.filter-button {
+padding: 9px 13px;
+border: 1px solid var(--border);
+border-radius: 30px;
+background: transparent;
+color: var(--muted);
+font-size: 12px;
+}
+
+.filter-button.active {
+border-color: var(--burgundy);
+background: var(--burgundy);
+color: white;
+}
+
+.artist-card {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+padding: 16px 0;
+border-bottom: 1px solid var(--border);
+}
+
+.artist-card h3 {
+margin: 0;
+font-size: 15px;
+}
+
+.artist-card p {
+margin: 5px 0 0;
+color: var(--muted);
+font-size: 12px;
+}
+
+.follow-button {
+flex-shrink: 0;
+padding: 8px 12px;
+border: 1px solid var(--burgundy);
+border-radius: 3px;
+background: transparent;
+color: #dba5b8;
+font-size: 12px;
+}
+
+.follow-button.following {
+background: var(--burgundy);
+color: white;
+}
+
+.empty-state {
+padding: 25px 0;
+color: var(--muted);
+font-size: 13px;
+}
+
+.bottom-nav {
+position: fixed;
+z-index: 10;
+right: 0;
+bottom: 0;
+left: 0;
+display: flex;
+justify-content: center;
+padding: 10px 5px max(12px, env(safe-area-inset-bottom));
+border-top: 1px solid var(--border);
+background: rgba(16, 14, 16, 0.97);
+backdrop-filter: blur(15px);
+}
+
+.nav-inner {
+display: grid;
+grid-template-columns: repeat(5, minmax(0, 1fr));
+width: 100%;
+max-width: 520px;
+gap: 2px;
+}
+
+.nav-button {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 6px;
+min-width: 0;
+min-height: 51px;
+padding: 5px 1px;
+border: 0;
+background: transparent;
+color: var(--muted);
+font-size: 10px;
+}
+
+.nav-button .icon {
+font-size: 19px;
+line-height: 1;
+}
+
+.nav-button.active {
+color: #dba5b8;
+}
+
+.nav-button.active .icon {
+color: var(--burgundy-light);
+}
+
+.page {
+display: none;
+}
+
+.page.active {
+display: block;
+}
+
+.year-select {
+padding: 10px;
+border: 1px solid var(--border);
+border-radius: 4px;
+background: var(--surface);
+color: var(--text);
+}
+
+.plain-list-item {
+padding: 14px 0;
+border-bottom: 1px solid var(--border);
+}
+
+.plain-list-item strong {
+display: block;
+font-size: 14px;
+}
+
+.plain-list-item span {
+display: block;
+margin-top: 5px;
+color: var(--muted);
+font-size: 12px;
+}
+
+.graph-placeholder {
+display: flex;
+align-items: flex-end;
+justify-content: space-around;
+height: 180px;
+padding: 20px 10px 0;
+border-bottom: 1px solid var(--border);
+}
+
+.bar-column {
+display: flex;
+flex: 1;
+height: 100%;
+flex-direction: column;
+justify-content: flex-end;
+align-items: center;
+gap: 9px;
+}
+
+.bar {
+width: min(35px, 60%);
+border-radius: 3px 3px 0 0;
+background: var(--burgundy);
+}
+
+.bar-year {
+padding-bottom: 8px;
+color: var(--muted);
+font-size: 10px;
+}
+
+@media (min-width: 700px) {
+.app {
+padding-top: 45px;
+}
+}
+</style>
 </head>
 
 <body>
-  <div class="app">
-
-    <header class="topbar">
-      <div class="logo">FRONT<span>ROW</span></div>
-      <button class="profile-button" data-go="profile"
-        aria-label="Open profile">✳</button>
-    </header>
-
-    <main>
-      <!-- HOME -->
-      <section class="page active" id="home">
-        <div class="eyebrow">YOUR CONCERT LIFE</div>
-        <h1>You're going places.</h1>
-        <p class="page-description">
-          Your next chapter starts at the front row.
-        </p>
-
-        <div id="home-content"></div>
-
-        <div class="section">
-          <div class="section-heading">
-            <h2>Coming up next</h2>
-            <button class="text-button" data-go="calendar">Calendar ↗</button>
-          </div>
-          <div class="concert-list" id="upcoming-list"></div>
-        </div>
-
-        <div class="section">
-          <div class="section-heading">
-            <h2>Your year so far</h2>
-            <button class="text-button" data-go="concerts">All stats ↗</button>
-          </div>
-          <div class="stats-grid" id="home-stats"></div>
-        </div>
-      </section>
-
-      <!-- CALENDAR -->
-      <section class="page" id="calendar">
-        <div class="eyebrow">YOUR SCHEDULE</div>
-        <h1>Calendar</h1>
-        <p class="page-description">
-          Every show you're planning, and every show you've lived.
-        </p>
-
-        <div class="filter-row" id="calendar-filters">
-          <button class="filter-button active" data-filter="All">All</button>
-          <button class="filter-button" data-filter="Upcoming">Upcoming</button>
-          <button class="filter-button" data-filter="Attended">Attended</button>
-        </div>
-
-        <div class="concert-list" id="calendar-list"></div>
-      </section>
-
-      <!-- SEARCH -->
-      <section class="page" id="search">
-        <div class="eyebrow">DISCOVER LIVE MUSIC</div>
-        <h1>Find your next show.</h1>
-        <p class="page-description">
-          Find artists, follow their journey and explore concerts.
-        </p>
-
-        <input
-          class="search-input"
-          id="artist-search"
-          type="search"
-          placeholder="Search artists…"
-          aria-label="Search artists"
-        >
-
-        <div class="section">
-          <div class="section-heading">
-            <h2>Artists</h2>
-            <span class="eyebrow" id="artist-count"></span>
-          </div>
-          <div id="artist-results"></div>
-        </div>
-      </section>
-
-      <!-- MY CONCERTS -->
-      <section class="page" id="concerts">
-        <div class="eyebrow">YOUR PERSONAL ARCHIVE</div>
-        <h1>My concerts</h1>
-        <p class="page-description">
-          Every show. Every city. Every memory.
-        </p>
-
-        <div class="filter-row" id="concert-subnav">
-          <button class="filter-button active" data-subpage="list">List</button>
-          <button class="filter-button" data-subpage="stats">Stats</button>
-        </div>
-
-        <div id="concert-list-view">
-          <input
-            class="search-input"
-            id="concert-search"
-            type="search"
-            placeholder="Artist, venue or city…"
-            aria-label="Search your concerts"
-          >
-
-          <div class="filter-row" id="concert-filters">
-            <button class="filter-button active" data-filter="All">All</button>
-            <button class="filter-button" data-filter="Upcoming">Upcoming</button>
-            <button class="filter-button" data-filter="Attended">Attended</button>
-          </div>
-
-          <div class="concert-list" id="archive-list"></div>
-        </div>
-
-        <div id="concert-stats-view" hidden>
-          <label class="eyebrow" for="stats-year">STATISTICS PERIOD</label>
-          <div class="section">
-            <select class="year-select" id="stats-year">
-              <option value="All">All time</option>
-              <option value="2026">2026</option>
-              <option value="2025">2025</option>
-              <option value="2024">2024</option>
-            </select>
-          </div>
-
-          <div class="section">
-            <div class="stats-grid" id="stats-grid"></div>
-          </div>
-
-          <div class="section">
-            <div class="section-heading">
-              <h2>Concert map</h2>
-            </div>
-            <p class="muted">
-              Your visited countries and concert cities will appear here
-              once we add the interactive map.
-            </p>
-          </div>
-
-          <div class="section">
-            <h2>Yearly trends</h2>
-            <label class="eyebrow" for="graph-variable">CHOOSE A VARIABLE</label>
-            <div class="section">
-              <select class="year-select" id="graph-variable">
-                <option value="spending">Money spent</option>
-                <option value="concerts">Concerts attended</option>
-              </select>
-            </div>
-            <div class="graph-placeholder" id="graph"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROFILE -->
-      <section class="page" id="profile">
-        <div class="eyebrow">YOUR SPACE</div>
-        <h1>Profile</h1>
-        <p class="page-description">
-          Make FRONTROW feel like yours.
-        </p>
-
-        <div class="stat-card">
-          <div class="eyebrow">YOUR PROFILE</div>
-          <h2 id="profile-name">Concert lover</h2>
-          <p class="muted">Your concert story starts here.</p>
-        </div>
-
-        <div class="section">
-          <h2>Settings</h2>
-          <div class="plain-list-item">
-            <strong>Appearance</strong>
-            <span>Black & burgundy · More themes later</span>
-          </div>
-          <div class="plain-list-item">
-            <strong>Followed artists</strong>
-            <span id="followed-count">0 artists followed</span>
-          </div>
-          <div class="plain-list-item">
-            <strong>Privacy & account</strong>
-            <span>Account features will be added later.</span>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <nav class="bottom-nav" aria-label="Main navigation">
-    <div class="nav-inner">
-      <button class="nav-button active" data-go="home">
-        <span class="icon">⌂</span><span>Home</span>
-      </button>
-      <button class="nav-button" data-go="calendar">
-        <span class="icon">▦</span><span>Calendar</span>
-      </button>
-      <button class="nav-button" data-go="search">
-        <span class="icon">⌕</span><span>Search</span>
-      </button>
-      <button class="nav-button" data-go="concerts">
-        <span class="icon">♫</span><span>Concerts</span>
-      </button>
-      <button class="nav-button" data-go="profile">
-        <span class="icon">◉</span><span>Profile</span>
-      </button>
-    </div>
-  </nav>
-
-  <script>
-    // Sample content only. These are not live tour dates.
-
-    const concerts = [
-      {
-        id: 1,
-        artist: "ATEEZ",
-        tour: "WORLD TOUR",
-        city: "Paris",
-        country: "France",
-        venue: "Concert venue",
-        date: "2026-11-14",
-        status: "Upcoming",
-        price: 245
-      },
-      {
-        id: 2,
-        artist: "P1Harmony",
-        tour: "TOUR",
-        city: "London",
-        country: "United Kingdom",
-        venue: "Concert venue",
-        date: "2026-10-08",
-        status: "Attended",
-        price: 95
-      },
-      {
-        id: 3,
-        artist: "TXT",
-        tour: "WORLD TOUR",
-        city: "Antwerp",
-        country: "Belgium",
-        venue: "Concert venue",
-        date: "2025-09-21",
-        status: "Attended",
-        price: 120
-      },
-      {
-        id: 4,
-        artist: "Charli XCX",
-        tour: "LIVE",
-        city: "Paris",
-        country: "France",
-        venue: "Concert venue",
-        date: "2024-06-18",
-        status: "Attended",
-        price: 85
-      }
-    ];
-
-    const artists = [
-      { name: "ATEEZ", genre: "K-pop", followed: true },
-      { name: "TXT", genre: "K-pop", followed: true },
-      { name: "P1Harmony", genre: "K-pop", followed: true },
-      { name: "Charli XCX", genre: "Pop", followed: true },
-      { name: "Slayyyter", genre: "Pop", followed: false },
-      { name: "NCT 127", genre: "K-pop", followed: false }
-    ];
-
-    let calendarFilter = "All";
-    let archiveFilter = "All";
-
-    function formatDate(date) {
-      return new Date(date + "T12:00:00").toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-      });
-    }
-
-    function dateParts(date) {
-      const d = new Date(date + "T12:00:00");
-      return {
-        month: d.toLocaleDateString("en-GB", { month: "short" }).toUpperCase(),
-        day: d.getDate()
-      };
-    }
-
-    function concertCard(concert) {
-      const d = dateParts(concert.date);
-
-      return `
-        <article class="concert-card">
-          <div class="date-block">
-            <div class="month">${d.month}</div>
-            <div class="day">${d.day}</div>
-          </div>
-          <div class="concert-info">
-            <h3>${concert.artist} — ${concert.tour}</h3>
-            <p>${concert.city}, ${concert.country}</p>
-            <p>${formatDate(concert.date)} · ${concert.status}</p>
-          </div>
-          <span class="arrow" aria-hidden="true">›</span>
-        </article>
-      `;
-    }
-
-    function attendedConcerts(year = "All") {
-      return concerts.filter(c =>
-        c.status === "Attended" &&
-        (year === "All" || c.date.startsWith(year))
-      );
-    }
-
-    function uniqueCount(items, key) {
-      return new Set(items.map(item => item[key])).size;
-    }
-
-    function statsFor(year = "All") {
-      const attended = attendedConcerts(year);
-
-      return {
-        shows: attended.length,
-        artists: uniqueCount(attended, "artist"),
-        cities: uniqueCount(attended, "city"),
-        countries: uniqueCount(attended, "country"),
-        spending: attended.reduce((sum, c) => sum + c.price, 0)
-      };
-    }
-
-    function statCard(value, label) {
-      return `
-        <div class="stat-card">
-          <div class="stat-number">${value}</div>
-          <div class="stat-label">${label}</div>
-        </div>
-      `;
-    }
-
-    function renderHome() {
-      const upcoming = concerts
-        .filter(c => c.status === "Upcoming")
-        .sort((a, b) => a.date.localeCompare(b.date));
-
-      const hero = upcoming[0];
-
-      document.getElementById("home-content").innerHTML = hero
-        ? `
-          <div class="hero">
-            <div class="hero-label">YOUR NEXT CONCERT</div>
-            <h2>${hero.artist}</h2>
-            <p>${hero.tour} · ${hero.city}, ${hero.country}</p>
-            <p style="margin-top:8px">${formatDate(hero.date)}</p>
-            <div class="countdown">${countdownText(hero.date)}</div>
-          </div>
-        `
-        : `
-          <div class="hero">
-            <div class="hero-label">YOUR NEXT CHAPTER</div>
-            <h2>Find your next show.</h2>
-            <p>Your next concert story is waiting.</p>
-            <div class="countdown">Explore artists in Search</div>
-          </div>
-        `;
-
-      document.getElementById("upcoming-list").innerHTML =
-        upcoming.slice(1, 4).map(concertCard).join("") ||
-        '<p class="empty-state">No other upcoming concerts yet.</p>';
-
-      const s = statsFor(new Date().getFullYear().toString());
-
-      document.getElementById("home-stats").innerHTML =
-        statCard(s.shows, "Concerts attended") +
-        statCard(s.artists, "Artists seen") +
-        statCard("€" + s.spending.toLocaleString("en-GB"), "Recorded spending") +
-        statCard(s.countries, "Countries visited");
-    }
-
-    function countdownText(date) {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const event = new Date(date + "T12:00:00");
-      const days = Math.ceil((event - today) / 86400000);
-
-      if (days < 0) return "Date has passed";
-      if (days === 0) return "TODAY IS THE DAY";
-      if (days === 1) return "1 DAY TO GO";
-      return days + " DAYS TO GO";
-    }
-
-    function renderConcertLists() {
-      const sorted = [...concerts].sort((a, b) =>
-        b.date.localeCompare(a.date)
-      );
-
-      document.getElementById("calendar-list").innerHTML =
-        sorted
-          .filter(c => calendarFilter === "All" || c.status === calendarFilter)
-          .map(concertCard)
-          .join("") ||
-        '<p class="empty-state">No concerts in this view.</p>';
-
-      const query = document.getElementById("concert-search").value
-        .trim().toLowerCase();
-
-      document.getElementById("archive-list").innerHTML =
-        sorted
-          .filter(c => archiveFilter === "All" || c.status === archiveFilter)
-          .filter(c =>
-            [c.artist, c.tour, c.city, c.country, c.venue]
-              .some(value => value.toLowerCase().includes(query))
-          )
-          .map(concertCard)
-          .join("") ||
-        '<p class="empty-state">No concerts match your search.</p>';
-    }
-
-    function renderArtists() {
-      const query = document.getElementById("artist-search").value
-        .trim().toLowerCase();
-
-      const results = artists.filter(a =>
-        a.name.toLowerCase().includes(query)
-      );
-
-      document.getElementById("artist-count").textContent =
-        results.length + " ARTISTS";
-
-      document.getElementById("artist-results").innerHTML =
-        results.map((artist) => `
-          <div class="artist-card">
-            <div>
-              <h3>${artist.name}</h3>
-              <p>${artist.genre} · Sample artist</p>
-            </div>
-            <button
-              class="follow-button ${artist.followed ? "following" : ""}"
-              data-follow="${artist.name}"
-            >${artist.followed ? "Following ✓" : "+ Follow"}</button>
-          </div>
-        `).join("") ||
-        '<p class="empty-state">No artists found. Try another search.</p>';
-
-      document.getElementById("followed-count").textContent =
-        artists.filter(a => a.followed).length + " artists followed";
-    }
-
-    function renderStats() {
-      const year = document.getElementById("stats-year").value;
-      const s = statsFor(year);
-
-      document.getElementById("stats-grid").innerHTML =
-        statCard(s.shows, "Concerts attended") +
-        statCard(s.artists, "Artists seen") +
-        statCard(s.countries, "Countries visited") +
-        statCard(s.cities, "Cities visited") +
-        statCard("€" + s.spending.toLocaleString("en-GB"), "Ticket spending");
-
-      renderGraph();
-    }
-
-    function renderGraph() {
-      const variable = document.getElementById("graph-variable").value;
-      const years = [2024, 2025, 2026];
-
-      const values = years.map(year => {
-        const s = statsFor(String(year));
-        return variable === "spending" ? s.spending : s.shows;
-      });
-
-      const max = Math.max(...values, 1);
-
-      document.getElementById("graph").innerHTML =
-        years.map((year, i) => `
-          <div class="bar-column">
-            <div class="bar" title="${values[i]}"
-              style="height:${Math.max(3, values[i] / max * 130)}px"></div>
-            <div class="bar-year">${year}</div>
-          </div>
-        `).join("");
-    }
-
-    function navigate(page) {
-      document.querySelectorAll(".page").forEach(section => {
-        section.classList.toggle("active", section.id === page);
-      });
-
-      document.querySelectorAll(".nav-button").forEach(button => {
-        button.classList.toggle("active", button.dataset.go === page);
-      });
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    document.addEventListener("click", event => {
-      const nav = event.target.closest("[data-go]");
-      if (nav) navigate(nav.dataset.go);
-
-      const follow = event.target.closest("[data-follow]");
-      if (follow) {
-        const artist = artists.find(a => a.name === follow.dataset.follow);
-        if (artist) {
-          artist.followed = !artist.followed;
-          renderArtists();
-        }
-      }
-
-      const filter = event.target.closest("[data-filter]");
-      if (filter) {
-        const parent = filter.parentElement;
-
-        parent.querySelectorAll("[data-filter]").forEach(button => {
-          button.classList.toggle("active", button === filter);
-        });
-
-        if (parent.id === "calendar-filters") {
-          calendarFilter = filter.dataset.filter;
-        } else {
-          archiveFilter = filter.dataset.filter;
-        }
-
-        renderConcertLists();
-      }
-
-      const subpage = event.target.closest("[data-subpage]");
-      if (subpage) {
-        document.querySelectorAll("[data-subpage]").forEach(button => {
-          button.classList.toggle("active", button === subpage);
-        });
-
-        const showStats = subpage.dataset.subpage === "stats";
-
-        document.getElementById("concert-list-view").hidden = showStats;
-        document.getElementById("concert-stats-view").hidden = !showStats;
-
-        if (showStats) renderStats();
-      }
-    });
-
-    document.getElementById("artist-search")
-      .addEventListener("input", renderArtists);
-
-    document.getElementById("concert-search")
-      .addEventListener("input", renderConcertLists);
-
-    document.getElementById("stats-year")
-      .addEventListener("change", renderStats);
-
-    document.getElementById("graph-variable")
-      .addEventListener("change", renderGraph);
-
-    renderHome();
-    renderConcertLists();
-    renderArtists();
-    renderStats();
-  </script>
+<div class="app">
+
+<header class="topbar">
+<div class="logo">FRONT<span>ROW</span></div>
+<button class="profile-button" data-go="profile"
+aria-label="Open profile">✳</button>
+</header>
+
+<main>
+<!-- HOME -->
+<section class="page active" id="home">
+<div class="eyebrow">YOUR CONCERT LIFE</div>
+<h1>You're going places.</h1>
+<p class="page-description">
+Your next chapter starts at the front row.
+</p>
+
+<div id="home-content"></div>
+
+<div class="section">
+<div class="section-heading">
+<h2>Coming up next</h2>
+<button class="text-button" data-go="calendar">Calendar ↗</button>
+</div>
+<div class="concert-list" id="upcoming-list"></div>
+</div>
+
+<div class="section">
+<div class="section-heading">
+<h2>Your year so far</h2>
+<button class="text-button" data-go="concerts">All stats ↗</button>
+</div>
+<div class="stats-grid" id="home-stats"></div>
+</div>
+</section>
+
+<!-- CALENDAR -->
+<section class="page" id="calendar">
+<div class="eyebrow">YOUR SCHEDULE</div>
+<h1>Calendar</h1>
+<p class="page-description">
+Every show you're planning, and every show you've lived.
+</p>
+
+<div class="filter-row" id="calendar-filters">
+<button class="filter-button active" data-filter="All">All</button>
+<button class="filter-button" data-filter="Upcoming">Upcoming</button>
+<button class="filter-button" data-filter="Attended">Attended</button>
+</div>
+
+<div class="concert-list" id="calendar-list"></div>
+</section>
+
+<!-- SEARCH -->
+<section class="page" id="search">
+<div class="eyebrow">DISCOVER LIVE MUSIC</div>
+<h1>Find your next show.</h1>
+<p class="page-description">
+Find artists, follow their journey and explore concerts.
+</p>
+
+<input
+class="search-input"
+id="artist-search"
+type="search"
+placeholder="Search artists…"
+aria-label="Search artists"
+>
+
+<div class="section">
+<div class="section-heading">
+<h2>Artists</h2>
+<span class="eyebrow" id="artist-count"></span>
+</div>
+<div id="artist-results"></div>
+</div>
+</section>
+
+<!-- MY CONCERTS -->
+<section class="page" id="concerts">
+<div class="eyebrow">YOUR PERSONAL ARCHIVE</div>
+<h1>My concerts</h1>
+<p class="page-description">
+Every show. Every city. Every memory.
+</p>
+
+<div class="filter-row" id="concert-subnav">
+<button class="filter-button active" data-subpage="list">List</button>
+<button class="filter-button" data-subpage="stats">Stats</button>
+</div>
+
+<div id="concert-list-view">
+<input
+class="search-input"
+id="concert-search"
+type="search"
+placeholder="Artist, venue or city…"
+aria-label="Search your concerts"
+>
+
+<div class="filter-row" id="concert-filters">
+<button class="filter-button active" data-filter="All">All</button>
+<button class="filter-button" data-filter="Upcoming">Upcoming</button>
+<button class="filter-button" data-filter="Attended">Attended</button>
+</div>
+
+<div class="concert-list" id="archive-list"></div>
+</div>
+
+<div id="concert-stats-view" hidden>
+<label class="eyebrow" for="stats-year">STATISTICS PERIOD</label>
+<div class="section">
+<select class="year-select" id="stats-year">
+<option value="All">All time</option>
+<option value="2026">2026</option>
+<option value="2025">2025</option>
+<option value="2024">2024</option>
+</select>
+</div>
+
+<div class="section">
+<div class="stats-grid" id="stats-grid"></div>
+</div>
+
+<div class="section">
+<div class="section-heading">
+<h2>Concert map</h2>
+</div>
+<p class="muted">
+Your visited countries and concert cities will appear here
+once we add the interactive map.
+</p>
+</div>
+
+<div class="section">
+<h2>Yearly trends</h2>
+<label class="eyebrow" for="graph-variable">CHOOSE A VARIABLE</label>
+<div class="section">
+<select class="year-select" id="graph-variable">
+<option value="spending">Money spent</option>
+<option value="concerts">Concerts attended</option>
+</select>
+</div>
+<div class="graph-placeholder" id="graph"></div>
+</div>
+</div>
+</section>
+
+<!-- PROFILE -->
+<section class="page" id="profile">
+<div class="eyebrow">YOUR SPACE</div>
+<h1>Profile</h1>
+<p class="page-description">
+Make FRONTROW feel like yours.
+</p>
+
+<div class="stat-card">
+<div class="eyebrow">YOUR PROFILE</div>
+<h2 id="profile-name">Concert lover</h2>
+<p class="muted">Your concert story starts here.</p>
+</div>
+
+<div class="section">
+<h2>Settings</h2>
+<div class="plain-list-item">
+<strong>Appearance</strong>
+<span>Black & burgundy · More themes later</span>
+</div>
+<div class="plain-list-item">
+<strong>Followed artists</strong>
+<span id="followed-count">0 artists followed</span>
+</div>
+<div class="plain-list-item">
+<strong>Privacy & account</strong>
+<span>Account features will be added later.</span>
+</div>
+</div>
+</section>
+</main>
+</div>
+
+<nav class="bottom-nav" aria-label="Main navigation">
+<div class="nav-inner">
+<button class="nav-button active" data-go="home">
+<span class="icon">⌂</span><span>Home</span>
+</button>
+<button class="nav-button" data-go="calendar">
+<span class="icon">▦</span><span>Calendar</span>
+</button>
+<button class="nav-button" data-go="search">
+<span class="icon">⌕</span><span>Search</span>
+</button>
+<button class="nav-button" data-go="concerts">
+<span class="icon">♫</span><span>Concerts</span>
+</button>
+<button class="nav-button" data-go="profile">
+<span class="icon">◉</span><span>Profile</span>
+</button>
+</div>
+</nav>
+
+<script>
+// Sample content only. These are not live tour dates.
+
+const concerts = [
+{
+id: 1,
+artist: "ATEEZ",
+tour: "WORLD TOUR",
+city: "Paris",
+country: "France",
+venue: "Concert venue",
+date: "2026-11-14",
+status: "Upcoming",
+price: 245
+},
+{
+id: 2,
+artist: "P1Harmony",
+tour: "TOUR",
+city: "London",
+country: "United Kingdom",
+venue: "Concert venue",
+date: "2026-10-08",
+status: "Attended",
+price: 95
+},
+{
+id: 3,
+artist: "TXT",
+tour: "WORLD TOUR",
+city: "Antwerp",
+country: "Belgium",
+venue: "Concert venue",
+date: "2025-09-21",
+status: "Attended",
+price: 120
+},
+{
+id: 4,
+artist: "Charli XCX",
+tour: "LIVE",
+city: "Paris",
+country: "France",
+venue: "Concert venue",
+date: "2024-06-18",
+status: "Attended",
+price: 85
+}
+];
+
+const artists = [
+{ name: "ATEEZ", genre: "K-pop", followed: true },
+{ name: "TXT", genre: "K-pop", followed: true },
+{ name: "P1Harmony", genre: "K-pop", followed: true },
+{ name: "Charli XCX", genre: "Pop", followed: true },
+{ name: "Slayyyter", genre: "Pop", followed: false },
+{ name: "NCT 127", genre: "K-pop", followed: false }
+];
+
+let calendarFilter = "All";
+let archiveFilter = "All";
+
+function formatDate(date) {
+return new Date(date + "T12:00:00").toLocaleDateString("en-GB", {
+day: "2-digit",
+month: "short",
+year: "numeric"
+});
+}
+
+function dateParts(date) {
+const d = new Date(date + "T12:00:00");
+return {
+month: d.toLocaleDateString("en-GB", { month: "short" }).toUpperCase(),
+day: d.getDate()
+};
+}
+
+function concertCard(concert) {
+const d = dateParts(concert.date);
+
+return `
+<article class="concert-card">
+<div class="date-block">
+<div class="month">${d.month}</div>
+<div class="day">${d.day}</div>
+</div>
+<div class="concert-info">
+<h3>${concert.artist} — ${concert.tour}</h3>
+<p>${concert.city}, ${concert.country}</p>
+<p>${formatDate(concert.date)} · ${concert.status}</p>
+</div>
+<span class="arrow" aria-hidden="true">›</span>
+</article>
+`;
+}
+
+function attendedConcerts(year = "All") {
+return concerts.filter(c =>
+c.status === "Attended" &&
+(year === "All" || c.date.startsWith(year))
+);
+}
+
+function uniqueCount(items, key) {
+return new Set(items.map(item => item[key])).size;
+}
+
+function statsFor(year = "All") {
+const attended = attendedConcerts(year);
+
+return {
+shows: attended.length,
+artists: uniqueCount(attended, "artist"),
+cities: uniqueCount(attended, "city"),
+countries: uniqueCount(attended, "country"),
+spending: attended.reduce((sum, c) => sum + c.price, 0)
+};
+}
+
+function statCard(value, label) {
+return `
+<div class="stat-card">
+<div class="stat-number">${value}</div>
+<div class="stat-label">${label}</div>
+</div>
+`;
+}
+
+function renderHome() {
+const upcoming = concerts
+.filter(c => c.status === "Upcoming")
+.sort((a, b) => a.date.localeCompare(b.date));
+
+const hero = upcoming[0];
+
+document.getElementById("home-content").innerHTML = hero
+? `
+<div class="hero">
+<div class="hero-label">YOUR NEXT CONCERT</div>
+<h2>${hero.artist}</h2>
+<p>${hero.tour} · ${hero.city}, ${hero.country}</p>
+<p style="margin-top:8px">${formatDate(hero.date)}</p>
+<div class="countdown">${countdownText(hero.date)}</div>
+</div>
+`
+: `
+<div class="hero">
+<div class="hero-label">YOUR NEXT CHAPTER</div>
+<h2>Find your next show.</h2>
+<p>Your next concert story is waiting.</p>
+<div class="countdown">Explore artists in Search</div>
+</div>
+`;
+
+document.getElementById("upcoming-list").innerHTML =
+upcoming.slice(1, 4).map(concertCard).join("") ||
+'<p class="empty-state">No other upcoming concerts yet.</p>';
+
+const s = statsFor(new Date().getFullYear().toString());
+
+document.getElementById("home-stats").innerHTML =
+statCard(s.shows, "Concerts attended") +
+statCard(s.artists, "Artists seen") +
+statCard("€" + s.spending.toLocaleString("en-GB"), "Recorded spending") +
+statCard(s.countries, "Countries visited");
+}
+
+function countdownText(date) {
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const event = new Date(date + "T12:00:00");
+const days = Math.ceil((event - today) / 86400000);
+
+if (days < 0) return "Date has passed";
+if (days === 0) return "TODAY IS THE DAY";
+if (days === 1) return "1 DAY TO GO";
+return days + " DAYS TO GO";
+}
+
+function renderConcertLists() {
+const sorted = [...concerts].sort((a, b) =>
+b.date.localeCompare(a.date)
+);
+
+document.getElementById("calendar-list").innerHTML =
+sorted
+.filter(c => calendarFilter === "All" || c.status === calendarFilter)
+.map(concertCard)
+.join("") ||
+'<p class="empty-state">No concerts in this view.</p>';
+
+const query = document.getElementById("concert-search").value
+.trim().toLowerCase();
+
+document.getElementById("archive-list").innerHTML =
+sorted
+.filter(c => archiveFilter === "All" || c.status === archiveFilter)
+.filter(c =>
+[c.artist, c.tour, c.city, c.country, c.venue]
+.some(value => value.toLowerCase().includes(query))
+)
+.map(concertCard)
+.join("") ||
+'<p class="empty-state">No concerts match your search.</p>';
+}
+
+function renderArtists() {
+const query = document.getElementById("artist-search").value
+.trim().toLowerCase();
+
+const results = artists.filter(a =>
+a.name.toLowerCase().includes(query)
+);
+
+document.getElementById("artist-count").textContent =
+results.length + " ARTISTS";
+
+document.getElementById("artist-results").innerHTML =
+results.map((artist) => `
+<div class="artist-card">
+<div>
+<h3>${artist.name}</h3>
+<p>${artist.genre} · Sample artist</p>
+</div>
+<button
+class="follow-button ${artist.followed ? "following" : ""}"
+data-follow="${artist.name}"
+>${artist.followed ? "Following ✓" : "+ Follow"}</button>
+</div>
+`).join("") ||
+'<p class="empty-state">No artists found. Try another search.</p>';
+
+document.getElementById("followed-count").textContent =
+artists.filter(a => a.followed).length + " artists followed";
+}
+
+function renderStats() {
+const year = document.getElementById("stats-year").value;
+const s = statsFor(year);
+
+document.getElementById("stats-grid").innerHTML =
+statCard(s.shows, "Concerts attended") +
+statCard(s.artists, "Artists seen") +
+statCard(s.countries, "Countries visited") +
+statCard(s.cities, "Cities visited") +
+statCard("€" + s.spending.toLocaleString("en-GB"), "Ticket spending");
+
+renderGraph();
+}
+
+function renderGraph() {
+const variable = document.getElementById("graph-variable").value;
+const years = [2024, 2025, 2026];
+
+const values = years.map(year => {
+const s = statsFor(String(year));
+return variable === "spending" ? s.spending : s.shows;
+});
+
+const max = Math.max(...values, 1);
+
+document.getElementById("graph").innerHTML =
+years.map((year, i) => `
+<div class="bar-column">
+<div class="bar" title="${values[i]}"
+style="height:${Math.max(3, values[i] / max * 130)}px"></div>
+<div class="bar-year">${year}</div>
+</div>
+`).join("");
+}
+
+function navigate(page) {
+document.querySelectorAll(".page").forEach(section => {
+section.classList.toggle("active", section.id === page);
+});
+
+document.querySelectorAll(".nav-button").forEach(button => {
+button.classList.toggle("active", button.dataset.go === page);
+});
+
+window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.addEventListener("click", event => {
+const nav = event.target.closest("[data-go]");
+if (nav) navigate(nav.dataset.go);
+
+const follow = event.target.closest("[data-follow]");
+if (follow) {
+const artist = artists.find(a => a.name === follow.dataset.follow);
+if (artist) {
+artist.followed = !artist.followed;
+renderArtists();
+}
+}
+
+const filter = event.target.closest("[data-filter]");
+if (filter) {
+const parent = filter.parentElement;
+
+parent.querySelectorAll("[data-filter]").forEach(button => {
+button.classList.toggle("active", button === filter);
+});
+
+if (parent.id === "calendar-filters") {
+calendarFilter = filter.dataset.filter;
+} else {
+archiveFilter = filter.dataset.filter;
+}
+
+renderConcertLists();
+}
+
+const subpage = event.target.closest("[data-subpage]");
+if (subpage) {
+document.querySelectorAll("[data-subpage]").forEach(button => {
+button.classList.toggle("active", button === subpage);
+});
+
+const showStats = subpage.dataset.subpage === "stats";
+
+document.getElementById("concert-list-view").hidden = showStats;
+document.getElementById("concert-stats-view").hidden = !showStats;
+
+if (showStats) renderStats();
+}
+});
+
+document.getElementById("artist-search")
+.addEventListener("input", renderArtists);
+
+document.getElementById("concert-search")
+.addEventListener("input", renderConcertLists);
+
+document.getElementById("stats-year")
+.addEventListener("change", renderStats);
+
+document.getElementById("graph-variable")
+.addEventListener("change", renderGraph);
+
+renderHome();
+renderConcertLists();
+renderArtists();
+renderStats();
+</script>
 </body>
 </html>

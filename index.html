@@ -1078,9 +1078,9 @@ function renderCalendar() {
       button.classList.add("has-concert");
     }
 
-    if (dateKey === selectedDateKey) {
-      button.classList.add("selected");
-    }
+   if (selectedCalendarDate && dateKey === selectedCalendarDate) {
+  button.classList.add("selected");
+}
 
     const today = new Date();
     if (

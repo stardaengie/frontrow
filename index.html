@@ -1171,16 +1171,17 @@ function uniqueCount(items, key) {
 return new Set(items.map(item => item[key])).size;
 }
 
-function statsFor(year = "All") {
-const attended = attendedConcerts(year);
+function statsFor(year = "ALL") {
+  const attended = attendedConcerts(year);
 
-return {
-shows: attended.length,
-artists: uniqueCount(attended, "artist"),
-cities: uniqueCount(attended, "city"),
-countries: uniqueCount(attended, "country"),
-spending: attended.reduce((sum, c) => sum + c.price, 0)
-};
+  return {
+    shows: attended.length,
+    artists: uniqueCount(attended, "artist"),
+    venues: uniqueCount(attended, "venue"),
+    cities: uniqueCount(attended, "city"),
+    countries: uniqueCount(attended, "country"),
+    spending: attended.reduce((sum, c) => sum + (Number(c.price) || 0), 0)
+  };
 }
 
 function statCard(value, label) {
@@ -1361,11 +1362,12 @@ const year = document.getElementById("stats-year").value;
 const s = statsFor(year);
 
 document.getElementById("stats-grid").innerHTML =
-statCard(s.shows, "Concerts attended") +
-statCard(s.artists, "Artists seen") +
-statCard(s.countries, "Countries visited") +
-statCard(s.cities, "Cities visited") +
-statCard("€" + s.spending.toLocaleString("en-GB"), "Ticket spending");
+  statCard(s.shows, "Concerts attended") +
+  statCard(s.artists, "Artists seen") +
+  statCard("€" + s.spending.toLocaleString("en-GB"), "Money spent") +
+  statCard(s.venues, "Venues visited");
+  statCard(s.cities, "Cities visited") +
+  statCard(s.countries, "Countries visited") +
 
 renderGraph();
 }

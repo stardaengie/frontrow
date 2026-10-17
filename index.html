@@ -488,6 +488,150 @@ font-size: 10px;
 padding-top: 45px;
 }
 }
+/* CALENDAR */
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 28px 0 20px;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.calendar-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.calendar-weekdays {
+  margin-bottom: 10px;
+}
+
+.calendar-weekdays span {
+  padding: 8px 0;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.calendar-day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  min-height: 54px;
+  padding: 9px 2px 6px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.calendar-day:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.calendar-day:not(:disabled):hover {
+  border-color: var(--burgundy-light);
+}
+
+.calendar-day.selected {
+  border-color: var(--burgundy-light);
+  background: var(--burgundy);
+}
+
+.calendar-day.today {
+  box-shadow: inset 0 0 0 1px var(--burgundy-light);
+}
+
+.calendar-day.has-concert::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--burgundy-light);
+}
+
+.calendar-day.selected.has-concert::after {
+  background: var(--white);
+}
+
+.calendar-day.empty {
+  background: transparent;
+  pointer-events: none;
+}
+
+.calendar-day-details {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.calendar-day-details h3 {
+  margin: 8px 0;
+  font-size: 20px;
+}
+
+.calendar-day-details p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.calendar-day-details .concert-card {
+  margin-top: 14px;
+}
+
+@media (max-width: 380px) {
+  .calendar-weekdays,
+  .calendar-grid {
+    gap: 3px;
+  }
+
+  .calendar-day {
+    min-height: 46px;
+    padding-top: 7px;
+    font-size: 12px;
+  }
+
+  .calendar-weekdays span {
+    font-size: 9px;
+  }
+}
 </style>
 </head>
 
@@ -530,19 +674,48 @@ Your next chapter starts at the front row.
 
 <!-- CALENDAR -->
 <section class="page" id="calendar">
-<div class="eyebrow">YOUR SCHEDULE</div>
-<h1>Calendar</h1>
-<p class="page-description">
-Every show you're planning, and every show you've lived.
-</p>
+  <div class="eyebrow">YOUR SCHEDULE</div>
+  <h1>Calendar</h1>
+  <p class="page-description">
+    Every show you're planning, and every show you've lived.
+  </p>
 
-<div class="filter-row" id="calendar-filters">
-<button class="filter-button active" data-filter="All">All</button>
-<button class="filter-button" data-filter="Upcoming">Upcoming</button>
-<button class="filter-button" data-filter="Attended">Attended</button>
-</div>
+  <div class="calendar-header">
+    <button class="calendar-arrow" id="prev-month" aria-label="Previous month">
+      &#8592;
+    </button>
 
-<div class="concert-list" id="calendar-list"></div>
+    <h2 id="calendar-month">November 2026</h2>
+
+    <button class="calendar-arrow" id="next-month" aria-label="Next month">
+      &#8594;
+    </button>
+  </div>
+
+  <div class="filter-row" id="calendar-filters">
+    <button class="filter-button active" data-filter="All">All</button>
+    <button class="filter-button" data-filter="Upcoming">Upcoming</button>
+    <button class="filter-button" data-filter="Attended">Attended</button>
+  </div>
+
+  <div class="calendar-weekdays">
+    <span>MON</span>
+    <span>TUE</span>
+    <span>WED</span>
+    <span>THU</span>
+    <span>FRI</span>
+    <span>SAT</span>
+    <span>SUN</span>
+  </div>
+
+  <div class="calendar-grid" id="calendar-grid"></div>
+
+  <div class="calendar-day-details" id="calendar-day-details">
+    <div class="eyebrow">SELECT A DATE</div>
+    <p>Choose a day to see your concerts.</p>
+  </div>
+
+  <div class="concert-list" id="calendar-list"></div>
 </section>
 
 <!-- SEARCH -->
@@ -790,6 +963,130 @@ return `
 `;
 }
 
+// Calendar state
+let calendarDate = new Date(2026, 10, 1);
+let selectedCalendarDate = "2026-11-14";
+
+function renderCalendarDayDetails() {
+  const details = document.getElementById("calendar-day-details");
+
+  if (!details) return;
+
+  const selectedDate = new Date(
+    selectedCalendarDate + "T12:00:00"
+  );
+
+  const readableDate = selectedDate.toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  const dayConcerts = concerts.filter(concert =>
+    concert.date === selectedCalendarDate &&
+    (
+      calendarFilter === "All" ||
+      (calendarFilter === "Upcoming" && concert.status === "Upcoming") ||
+      (calendarFilter === "Attended" && concert.status === "Attended")
+    )
+  );
+
+  details.innerHTML = `
+    <div class="eyebrow">SELECTED DATE</div>
+    <h3>${readableDate}</h3>
+    ${
+      dayConcerts.length
+        ? dayConcerts.map(concert => concertCard(concert)).join("")
+        : "<p>No concerts scheduled for this date.</p>"
+    }
+  `;
+}
+
+function renderCalendar() {
+  const grid = document.getElementById("calendar-grid");
+  const monthLabel = document.getElementById("calendar-month");
+
+  if (!grid || !monthLabel) return;
+
+  const year = calendarDate.getFullYear();
+  const month = calendarDate.getMonth();
+
+  monthLabel.textContent = calendarDate.toLocaleDateString("en-GB", {
+    month: "long",
+    year: "numeric"
+  });
+
+  grid.innerHTML = "";
+
+  const firstDay = new Date(year, month, 1);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  // Monday-first calendar: Monday = 0, Sunday = 6
+  const startingDay = (firstDay.getDay() + 6) % 7;
+
+  for (let i = 0; i < startingDay; i++) {
+    const emptyCell = document.createElement("div");
+    emptyCell.className = "calendar-day empty";
+    grid.appendChild(emptyCell);
+  }
+
+  const selectedDateKey = selectedCalendarDate;
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day);
+    const dateKey = [
+      year,
+      String(month + 1).padStart(2, "0"),
+      String(day).padStart(2, "0")
+    ].join("-");
+
+    const dayConcerts = concerts.filter(concert =>
+      concert.date === dateKey &&
+      (
+        calendarFilter === "All" ||
+        (calendarFilter === "Upcoming" && concert.status === "Upcoming") ||
+        (calendarFilter === "Attended" && concert.status === "Attended")
+      )
+    );
+
+    const button = document.createElement("button");
+    button.className = "calendar-day";
+    button.textContent = day;
+    button.type = "button";
+    button.setAttribute("aria-label", date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    }));
+
+    if (dayConcerts.length > 0) {
+      button.classList.add("has-concert");
+    }
+
+    if (dateKey === selectedDateKey) {
+      button.classList.add("selected");
+    }
+
+    const today = new Date();
+    if (
+      date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate()
+    ) {
+      button.classList.add("today");
+    }
+
+    button.addEventListener("click", () => {
+      selectedCalendarDate = dateKey;
+      renderCalendar();
+      renderCalendarDayDetails();
+    });
+
+    grid.appendChild(button);
+  }
+}
+
 function attendedConcerts(year = "All") {
 return concerts.filter(c =>
 c.status === "Attended" &&
@@ -821,6 +1118,36 @@ return `
 </div>
 `;
 }
+
+// FRONTROW calendar controls
+
+document.getElementById("prev-month").addEventListener("click", () => {
+  calendarDate.setMonth(calendarDate.getMonth() - 1);
+  renderCalendar();
+});
+
+document.getElementById("next-month").addEventListener("click", () => {
+  calendarDate.setMonth(calendarDate.getMonth() + 1);
+  renderCalendar();
+});
+
+// Calendar filters
+document.querySelectorAll("#calendar-filters .filter-button").forEach(button => {
+  button.addEventListener("click", () => {
+    calendarFilter = button.dataset.filter;
+
+    document.querySelectorAll("#calendar-filters .filter-button").forEach(item => {
+      item.classList.toggle("active", item === button);
+    });
+
+    renderCalendar();
+    renderCalendarDayDetails();
+  });
+});
+
+// Initial calendar display
+renderCalendar();
+renderCalendarDayDetails();
 
 function renderHome() {
 const upcoming = concerts

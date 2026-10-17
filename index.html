@@ -261,27 +261,31 @@ font-size: 20px;
 }
 
 .stats-grid {
-display: grid;
-grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 11px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .stat-card {
-padding: 18px;
-border: 1px solid var(--border);
-border-radius: 5px;
-background: var(--surface);
+  padding: 16px 8px;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
 }
 
 .stat-number {
-margin-top: 12px;
-font-size: 27px;
-font-weight: 600;
+  font-size: 27px;
+  font-weight: 700;
+  color: var(--text);
 }
 
 .stat-label {
-color: var(--muted);
-font-size: 12px;
+  margin-top: 7px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.4;
 }
 
 .page-description {
@@ -805,7 +809,36 @@ aria-label="Search your concerts"
 </div>
 
 <div class="section">
-<div class="stats-grid" id="stats-grid"></div>
+<div class="stats-grid" id="stats-grid">
+  <div class="stat-card">
+    <div class="stat-number" id="stat-concerts">0</div>
+    <div class="stat-label">concerts attended</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-number" id="stat-artists">0</div>
+    <div class="stat-label">artists seen</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-number" id="stat-spending">€0</div>
+    <div class="stat-label">money spent</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-number" id="stat-cities">0</div>
+    <div class="stat-label">cities visited</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-number" id="stat-countries">0</div>
+    <div class="stat-label">countries visited</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-number" id="stat-venues">0</div>
+    <div class="stat-label">venues visited</div>
+  </div>
 </div>
 
 <div class="section">
